@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Melbourne Train Station Entries, FY2024–25</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; padding: 24px; background: #f8fafc; }
+    #vis { max-width: 1000px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <h1>Melbourne Train Station Entries, FY2024–25</h1>
+  <div id="vis"></div>
+
+  <script>
+    const spec = {
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      width: 900,
+      height: 600,
+      projection: { type: "mercator", center: [144.9631, -37.8136], scale: 45000, translate: [450, 320] },
+      layer: [
+        {
+          data: { url: "https://raw.githubusercontent.com/vega/vega-datasets/main/data/world-110m.json", format: { type: "topojson", feature: "land" } },
+          mark: { type: "geoshape", fill: "#eef2ff", stroke: "#cbd5e1", strokeWidth: 0.8 }
+        },
+        {
+  data: { url: "data/stations.csv", format: { type: "csv" } }, 
+  transform: [
+    { filter: 'datum.Fin_year == "FY24-25"' },
+    // rank by annual entries,  keep top five for labels later
+    { window: [{ op: "rank", as: "rk" }], sort: [{ field: "Pax_annual", order: "descending" }] }
+  ],
+  layer: [
+    {
+      mark: { type: "circle", opacity: 0.85, stroke: "white", strokeWidth: 0.5 },
+      encoding: {
+        longitude: { field: "Stop_long", type: "quantitative" },
+        latitude:  { field: "Stop_lat",  type: "quantitative" },
+        size:      { field: "Pax_annual", type: "quantitative", title: "Annual entries", scale: { type: "sqrt", range: [16, 1500] } },
+        color:     { value: "#1f77b4" },
+
+        order:     { field: "Pax_annual", sort: "ascending" },
+        tooltip: [
+          { field: "Stop_name",  type: "nominal",       title: "Station" },
+          { field: "Pax_annual", type: "quantitative",  title: "Annual entries", format: "," },
+          { field: "Fin_year",   type: "nominal",       title: "Financial year" }
+        ]
+      }
+    },
+    {
+      // labels top five 
+      transform: [{ filter: "datum.rk <= 5" }],
+      mark: { type: "text", dy: -10, fontWeight: "bold" },
+      encoding: {
+        longitude: { field: "Stop_long", type: "quantitative" },
+        latitude:  { field: "Stop_lat",  type: "quantitative" },
+        text:      { field: "Stop_name" },
+        color:     { value: "#0f172a" }
+      }
+    }
+  ]
+}
+
+      ]
+    };
+    vegaEmbed("#vis", spec, { actions: false });
+  </script>
+</body>
+</html>
