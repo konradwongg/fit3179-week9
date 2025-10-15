@@ -1,0 +1,79 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "data/solar_top_postcodes.csv"},
+
+  "title": {
+    "text": "How income and population size shape solar uptake",
+    "subtitle": "Bubble size shows suburb population"
+  },
+
+  "width": 560,
+  "height": 360,
+
+  "params": [
+    {
+      "name": "hover",
+      "select": {"type": "point", "fields": ["Postcode"], "on": "mouseover", "clear": "mouseout"}
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {"type": "circle", "opacity": 0.55, "stroke": "white", "strokeWidth": 0.6},
+      "encoding": {
+        "x": {
+          "field": "MedianIncome",
+          "type": "quantitative",
+          "axis": {
+            "title": "Median weekly household income ($)",
+            "format": "$,.0f",
+            "tickCount": 6
+          },
+          "scale": {"nice": true}
+        },
+        "y": {
+          "field": "InstallationsPer1000",
+          "type": "quantitative",
+          "axis": {"title": "Rooftop systems per 1,000 dwellings"}
+        },
+        "size": {
+          "field": "Population",
+          "type": "quantitative",
+          "scale": {"range": [30, 600]},
+          "legend": {"title": "Population"}
+        },
+        "color": {
+          "field": "State",
+          "type": "nominal",
+          "scale": {
+            "domain": ["NSW","VIC","QLD","SA","WA","TAS","NT","ACT"],
+            "range":  ["#1565C0","#2E7D32","#F9A825","#7B1FA2","#00897B","#EF6C00","#8E24AA","#455A64"]
+          },
+          "legend": {"title": "State", "orient": "bottom"}
+        },
+        "opacity": {"condition": {"param": "hover", "value": 0.95}, "value": 0.45},
+        "tooltip": [
+          {"field": "Postcode", "title": "Postcode"},
+          {"field": "State", "title": "State"},
+          {"field": "Population", "title": "Population", "format": ",.0f"},
+          {"field": "MedianIncome", "title": "Median income", "format": "$,.0f"},
+          {"field": "InstallationsPer1000", "title": "Systems per 1,000", "format": ",.1f"}
+        ]
+      }
+    },
+
+    {
+      "transform": [{"regression": "InstallationsPer1000", "on": "MedianIncome"}],
+      "mark": {"type": "line", "color": "#666", "opacity": 0.9},
+      "encoding": {
+        "x": {"field": "MedianIncome", "type": "quantitative"},
+        "y": {"field": "InstallationsPer1000", "type": "quantitative"}
+      }
+    }
+  ],
+
+  "config": {
+    "legend": {"orient": "bottom", "columns": 4},
+    "axis": {"labelFontSize": 12, "titleFontSize": 12}
+  }
+}

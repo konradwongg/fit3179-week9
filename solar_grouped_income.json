@@ -1,0 +1,14 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "data/solar_top_postcodes.csv"},
+  "mark": "bar",
+  "encoding": {
+    "x": {"field": "IncomeBand", "type": "nominal", "title": "Income Band"},
+    "y": {"aggregate": "mean", "field": "InstallationsPer1000", "type": "quantitative", "title": "Avg Installations per 1,000"},
+    "color": {"field": "IncomeBand", "type": "nominal"},
+    "tooltip": [
+      {"aggregate": "mean", "field": "InstallationsPer1000", "title": "Average per 1,000"}
+    ]
+  },
+  "title": "Average Solar Adoption by Income Band"
+}

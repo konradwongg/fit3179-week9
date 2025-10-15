@@ -1,0 +1,33 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "data/solar_trend.csv"},
+  "transform": [{"filter": "datum.Year >= 2010 && datum.Year <= 2014"}],
+  "width": 700,
+  "height": 320,
+  "layer": [
+    {
+      "mark": {"type": "rect", "opacity": 0.15, "color": "#F9A825"},
+      "encoding": {
+        "x": {"datum": 2011},
+        "x2": {"datum": 2013}
+      }
+    },
+    {
+      "mark": {"type": "area", "color": "#F9A825", "opacity": 0.7},
+      "encoding": {
+        "x": {"field": "Year", "type": "ordinal"},
+        "y": {"field": "TotalInstallations", "type": "quantitative", "axis": {"format": ","}},
+        "tooltip": [{"field": "Year"}, {"field": "TotalInstallations","format": ","}]
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 6, "dy": -6, "fontWeight": 600, "color": "#333"},
+      "encoding": {
+        "x": {"datum": 2011},
+        "y": {"aggregate": "max", "field": "TotalInstallations"},
+        "text": {"value": "Policy-driven boom"}
+      }
+    }
+  ],
+  "title": "Solar Boom Years (2011–2013)"
+}

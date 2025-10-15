@@ -1,0 +1,23 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "data/solar_top_postcodes.csv"},
+  "mark": "point",
+  "encoding": {
+    "x": {"field": "Population", "type": "quantitative"},
+    "y": {"field": "TotalInstallations", "type": "quantitative"},
+"color": {
+  "field": "State",
+  "type": "nominal",
+  "scale": {
+    "domain": ["NSW","VIC","QLD","SA","WA","TAS","NT","ACT"],
+    "range":  ["#1565C0","#2E7D32","#F9A825","#7B1FA2","#00897B","#EF6C00","#8E24AA","#455A64"]
+  },
+  "legend": {"title": "State"}
+},    "tooltip": [
+      {"field": "Postcode"},
+      {"field": "Population"},
+      {"field": "TotalInstallations"}
+    ]
+  },
+  "title": "Population vs Total Solar Installations"
+}

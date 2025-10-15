@@ -1,0 +1,194 @@
+/* ================================================
+   0) Theme variables
+================================================ */
+:root {
+  --ink: #222;
+  --muted: #6b7280;
+  --accent: #f4a261;
+  --bg: #fffdfa;
+  --panel: #fffaf0;
+  --max: 1100px;
+}
+
+/* ================================================
+   1) Base & reset
+================================================ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--ink);
+  line-height: 1.65;
+  background: #fff;
+}
+
+/* Keep content centered with a max-width container */
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Accessibility: skip to content */
+.skip-link {
+  position: absolute; left: -999px; top: auto;
+  width: 1px; height: 1px; overflow: hidden;
+}
+.skip-link:focus {
+  left: 12px; top: 12px; width: auto; height: auto;
+  background: #000; color: #fff; padding: 8px 10px; border-radius: 8px;
+}
+
+/* ================================================
+   2) Page header (hero)
+================================================ */
+.page-hero {
+  background: var(--bg);
+  padding: 48px 0 28px;
+  border-bottom: 1px dotted #eee;
+}
+.page-hero h1 {
+  margin: 0 0 10px;
+  font-size: 32px;
+  color: #d69200;
+  text-align: center;
+}
+.lede {
+  margin: 0;
+  color: var(--muted);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* ================================================
+   3) Chapters and headings
+================================================ */
+.chapter {
+  padding: 48px 0;
+  border-top: 1px solid #eee;
+}
+.chapter:first-of-type { border-top: none; }
+
+.chapter-title {
+  font-size: 24px;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+}
+.chapter-title span {
+  display: inline-grid; place-items: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-weight: 700;
+}
+.chapter-subtitle {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+/* ================================================
+   4) Two-column viz rows
+================================================ */
+.viz-row {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin: 28px 0;
+}
+.viz-row.alt { flex-direction: row-reverse; }
+
+.viz-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.viz-chart {
+  flex: 1;
+  min-width: 320px;
+
+  /* Center embedded Vega views within the chart column */
+  display: flex;
+  justify-content: center;
+}
+.viz-chart figure { margin: 0; }
+
+/* Figure notes / captions */
+.note {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* ================================================
+   5) Insight blocks
+================================================ */
+.insight-title { margin: 0 0 8px; font-size: 18px; }
+.insight-list { margin: 10px 0 0 0; padding: 0 0 0 18px; }
+.insight-list li { margin: 4px 0; }
+
+.callout {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  background: var(--panel);
+  border: 1px solid #fde0b2;
+  border-radius: 10px;
+}
+
+/* ================================================
+   6) Stats strip (key numbers)
+================================================ */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding: 22px 0 8px;
+}
+.stat {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+}
+.stat-icon {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  background: #fffaf0;
+  border-radius: 10px;
+  border: 1px solid #fde0b2;
+}
+.stat-num { font-weight: 700; font-size: 20px; }
+.stat-label { color: var(--muted); font-size: 13px; }
+
+/* ================================================
+   7) Footer
+================================================ */
+.site-footer {
+  border-top: 1px dotted #eee;
+  padding: 28px 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ================================================
+   8) Responsive tweaks
+================================================ */
+@media (max-width: 900px) {
+  .viz-row,
+  .viz-row.alt { flex-direction: column; }
+  .chapter-title { justify-content: center; }
+  .chapter-subtitle { text-align: center; }
+}
+
+@media (max-width: 850px) {
+  .stat-strip { grid-template-columns: 1fr; }
+}

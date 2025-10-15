@@ -1,0 +1,16 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "data/solar_top_postcodes.csv"},
+  "mark": "bar",
+  "encoding": {
+    "y": {"field": "Postcode", "type": "nominal", "sort": "-x", "title": "Postcode"},
+    "x": {"field": "TotalInstallations", "type": "quantitative", "title": "Total Installations"},
+    "color": {"field": "State", "type": "nominal"},
+    "tooltip": [
+      {"field": "Postcode"},
+      {"field": "State"},
+      {"field": "TotalInstallations"}
+    ]
+  },
+  "title": "Top Postcodes by Total Solar Installations"
+}

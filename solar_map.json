@@ -1,0 +1,42 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 520,
+  "title": "Solar Installations per State (2001–2024)",
+  "projection": {
+    "type": "mercator",
+    "center": [134, -25],   
+    "scale": 850           
+  },
+  "layer": [
+    {
+      "data": { "url": "data/aus_states.topo.json",
+        "format": { "type": "topojson", "feature": "aus_states" }
+      },
+      "transform": [
+        {
+          "lookup": "properties.abbr",
+          "from": {
+            "data": { "url": "data/solar_state_summary.csv" },
+            "key": "State",
+            "fields": ["TotalInstallations"]
+          }
+        }
+      ],
+      "mark": { "type": "geoshape", "stroke": "white", "strokeWidth": 0.6 },
+      "encoding": {
+        "color": {
+          "field": "TotalInstallations", "type": "quantitative",
+          "title": "Total installations",
+          "scale": { "scheme": "yellowgreenblue" }
+        },
+        "tooltip": [
+          { "field": "properties.name", "title": "State" },
+          { "field": "TotalInstallations", "title": "Total installs", "format": "," }
+        ]
+      }
+    }
+
+    
+  ]
+}

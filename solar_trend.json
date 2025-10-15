@@ -1,0 +1,11 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {"url": "data/solar_trend.csv"},
+  "mark": {"type": "area", "color": "#f9a825", "opacity": 0.7},
+  "encoding": {
+    "x": {"field": "Year", "type": "ordinal", "title": "Year"},
+    "y": {"field": "TotalInstallations", "type": "quantitative", "title": "Solar Installations"},
+    "tooltip": [{"field": "Year"}, {"field": "TotalInstallations"}]
+  },
+  "title": "National Growth of Solar Installations (2001–2024)"
+}
